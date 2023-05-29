@@ -12,12 +12,12 @@ class Project extends Model
 
     protected $guarded=[];
 
-    protected function image(): Attribute
+   /* protected function image(): Attribute
     {
         return Attribute::make(
             //get: fn (string|null $value) => $value != null ? $value.=asset('storage/' . $value) : null,
         );
-    }
+    }*/
 
     public function type(){
         return $this->belongsTo(Type::class);
