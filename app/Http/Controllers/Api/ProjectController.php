@@ -11,7 +11,7 @@ use function GuzzleHttp\Promise\each;
 class ProjectController extends Controller
 {
     public function index(){
-        $data=Project::with('technologies')->select('projects.*','types.name')->leftJoin('types', 'types.id', '=', 'projects.type_id')->get();
+        $data=Project::with('technologies')->select('projects.*','types.name')->leftJoin('types', 'types.id', '=', 'projects.type_id')->paginate(3);
 
         return response()->json([
             'success' => true,
@@ -20,7 +20,7 @@ class ProjectController extends Controller
     }
 
     public function show($id){
-        $data=Project::find($id);
+        $data=Project::with('technologies')->select('projects.*','types.name')->leftJoin('types', 'types.id', '=', 'projects.type_id')->find($id);
 
         return response()->json([
             'success' => true,

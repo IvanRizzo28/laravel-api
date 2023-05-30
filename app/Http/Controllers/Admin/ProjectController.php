@@ -49,10 +49,11 @@ class ProjectController extends Controller
         //dd($data);
 
         $data=array_merge($data,['slug'=>Str::slug($data['title'])]);
-        $project->fill($data);
         if(isset($data['image'])){
             $data['image']=Storage::put('uploads',$data['image']);
         }
+
+        $project->fill($data);
         $project->save();
 
         if(isset($data['technologies'])){ //null?
