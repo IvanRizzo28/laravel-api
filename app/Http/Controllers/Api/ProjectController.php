@@ -20,11 +20,28 @@ class ProjectController extends Controller
     }
 
     public function show($id){
-        $data=Project::with('technologies')->select('projects.*','types.name')->leftJoin('types', 'types.id', '=', 'projects.type_id')->find($id);
+        try {
+            $data=Project::with('technologies','comments')->select('projects.*','types.name')->leftJoin('types', 'types.id', '=', 'projects.type_id')->find($id);
 
-        return response()->json([
-            'success' => true,
-            'results' => $data
-        ]);
+            if ($data){
+                return response()->json([
+                    'success' => true,
+                    'results' => $data
+                ]);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'results' => null,
+                    'error' => 404
+                ], 404);
+            }
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'results' => null,
+                'error' => 500
+            ], 500);
+        }
     }
 }
