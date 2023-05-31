@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Api\CommentRequest;
+use App\Models\Comment;
 
 class CommentController extends Controller
 {
-    public function store(Request $request){
-        dd($request->all());
+    public function store(CommentRequest $request){
+        $data=$request->validated();
+        Comment::create($data);
+        return $data;
     }
 }
